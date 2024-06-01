@@ -1,0 +1,232 @@
+# may/08/2023 19:38:06 by RouterOS 6.42.3
+# software id = 73BC-DP9M
+#
+# model = RouterBOARD 3011UiAS
+# serial number = 783D075907EE
+/interface bridge
+add fast-forward=no name=bridge-ADM-SCHUTZ
+add fast-forward=no name=bridge-ADM-SCHUTZ-A
+add fast-forward=no name=bridge-ADM-SCHUTZ-A2
+add fast-forward=no name=bridge-ADM-SCHUTZ-B
+add fast-forward=no name=bridge-ADM-SCHUTZ-JAQUEIRA
+add name=bridge-vlan-predio
+add fast-forward=no name=loopaback
+/interface ethernet
+set [ find default-name=ether1 ] comment=LINK-INFORMAC
+set [ find default-name=ether2 ] comment=ADM-SCHUTZ-A
+set [ find default-name=ether3 ] comment=ADM-SCHUTZ-B
+set [ find default-name=ether4 ] comment=ADM-SCHUTZ
+set [ find default-name=ether5 ] comment=ADM-SCHUTZ-A2
+set [ find default-name=ether6 ] comment=ADM-SCHUTZ-JAQUEIRA
+set [ find default-name=ether10 ] comment=PREDIO
+/interface vlan
+add interface=ether4 name=ADM-SCHUTZ vlan-id=2425
+add interface=ether2 name=ADM-SCHUTZ-A vlan-id=2426
+add interface=ether5 name=ADM-SCHUTZ-A2 vlan-id=2465
+add interface=ether3 name=ADM-SCHUTZ-B vlan-id=2427
+add interface=ether6 name=ADM-SCHUTZ-JAQUEIRA vlan-id=2471
+add comment=Gerencia interface=ether1 name=vlan-611 vlan-id=611
+add comment=ADM-SCHUTZ interface=vlan-611 name=vlan-2425 vlan-id=2425
+add comment=ADM-SCHUTZ-A interface=vlan-611 name=vlan-2426 vlan-id=2426
+add comment=ADM-SCHUTZ-B interface=vlan-611 name=vlan-2427 vlan-id=2427
+add comment=ADM-SCHUTZ-A2 interface=vlan-611 name=vlan-2465 vlan-id=2465
+add comment=ADM-SCHUTZ-JAQUEIRA interface=vlan-611 name=vlan-2471 vlan-id=2471
+add interface=vlan-611 name=VLAN-SCHUTZ-PREDIO vlan-id=2464
+/interface list
+add exclude=dynamic name=discover
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/snmp community
+set [ find default=yes ] addresses=\
+    132.255.28.221/32,172.21.232.0/24,172.16.232.0/24 name=informac-adm
+/interface bridge port
+add auto-isolate=yes bridge=bridge-vlan-predio interface=VLAN-SCHUTZ-PREDIO
+add auto-isolate=yes bridge=bridge-vlan-predio interface=ether10
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ-A interface=ADM-SCHUTZ-A
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ-A interface=vlan-2426
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ-A2 interface=ADM-SCHUTZ-A2
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ-A2 interface=vlan-2465
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ-JAQUEIRA interface=\
+    ADM-SCHUTZ-JAQUEIRA
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ-JAQUEIRA interface=vlan-2471
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ-B interface=ADM-SCHUTZ-B
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ-B interface=vlan-2427
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ interface=ADM-SCHUTZ
+add auto-isolate=yes bridge=bridge-ADM-SCHUTZ interface=vlan-2425
+/interface bridge settings
+set use-ip-firewall=yes use-ip-firewall-for-vlan=yes
+/ip neighbor discovery-settings
+set discover-interface-list=all
+/interface bridge vlan
+add tagged=\
+    ether1,ether2,ether3,ether4,ether5,ether6,ether7,ether8,ether9,sfp1 \
+    untagged=ether10 vlan-ids=10,2425-2427,2464-2465,2471
+/interface list member
+add interface=ether1 list=discover
+add interface=ether2 list=discover
+add interface=ether3 list=discover
+add interface=ether4 list=discover
+add interface=ether5 list=discover
+add interface=sfp1 list=discover
+add interface=ether6 list=discover
+add interface=ether7 list=discover
+add interface=ether8 list=discover
+add interface=ether9 list=discover
+add interface=ether10 list=discover
+add list=discover
+add interface=bridge-vlan-predio list=discover
+add list=discover
+/ip address
+add address=172.16.88.5/30 comment="ADM-SCHUTZ-A\r\
+    \n" interface=ether2 network=172.16.88.4
+add address=172.16.16.220/29 comment="Alias CORE" interface=vlan-611 network=\
+    172.16.16.216
+add address=172.16.88.9/30 comment="ADM-SCHUTZ-A2\r\
+    \n" interface=ether5 network=172.16.88.8
+add address=172.16.88.17/30 comment="ADM-SCHUTZ-JAQUEIRA\r\
+    \n" interface=ether6 network=172.16.88.16
+add address=172.16.88.13/30 comment="ADM-SCHUTZ-B\r\
+    \n" interface=ether3 network=172.16.88.12
+add address=172.16.88.1/30 comment="ADM-SCHUTZ\r\
+    \n" interface=ether4 network=172.16.88.0
+add address=172.16.88.255 comment=loopaback interface=loopaback network=\
+    172.16.88.255
+add address=172.16.88.25/30 comment="RES PINHAIS 1" interface=ADM-SCHUTZ-A2 \
+    network=172.16.88.24
+add address=172.16.88.29/30 comment="RES SANTORINE BL F" interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.28
+add address=172.16.94.254/24 interface=ADM-SCHUTZ-JAQUEIRA network=\
+    172.16.94.0
+add address=172.16.88.45/30 comment=RES-ILHAS-GREGAS-BL-4 interface=\
+    ADM-SCHUTZ-A network=172.16.88.44
+add address=172.16.88.49/30 comment=RES-ILHAS-GREGAS-BL-3 interface=\
+    ADM-SCHUTZ-A network=172.16.88.48
+add address=172.16.88.53/30 comment=RES-ILHAS-GREGAS-BL-12 interface=\
+    ADM-SCHUTZ-A network=172.16.88.52
+add address=172.16.88.57/30 comment="RES-SANTORINE-BL-E-(IMPAR)" interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.56
+add address=172.16.88.61/30 comment=RES-SANTORINE-BL-B interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.60
+add address=172.16.88.65/30 comment=RES-SANTORINI-BL-H interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.64
+add address=172.16.88.73/30 comment=RES-SANTORINE-BL-D interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.72
+add address=172.16.88.189/30 comment="RESIDENCIAL SANTORINI BL C" interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.188
+add address=172.16.88.233/30 comment="RES. SANTORINI BLOCO C PAR" interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.232
+add address=172.16.88.81/30 comment=RES-SANTORINI-BL-A-IMPAR interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.80
+add address=172.16.88.105/30 comment="RES BAUER" interface=\
+    ADM-SCHUTZ-JAQUEIRA network=172.16.88.104
+add address=172.16.88.185/30 comment="RESIDENCIAL SANTORINI BL B" interface=\
+    ADM-SCHUTZ-A network=172.16.88.184
+add address=172.16.88.97/30 comment="RES ILHAS GREGAS BLOCO 10" interface=\
+    ADM-SCHUTZ-A network=172.16.88.96
+/ip dns
+set servers=132.255.29.2,132.255.30.14,2804:2008:ff::2,2804:2008:ff::14
+/ip firewall nat
+add action=src-nat chain=srcnat disabled=yes dst-address=172.16.86.234 \
+    to-addresses=172.16.86.233
+/ip route
+add distance=1 gateway=172.16.16.217
+/ip service
+set telnet disabled=yes port=55023
+set ftp disabled=yes port=55021
+set www disabled=yes port=55080
+set ssh port=55022
+set api disabled=yes
+set api-ssl disabled=yes
+/lcd
+set time-interval=hour
+/radius
+add address=172.21.232.42 secret="Ii^nNf&F\$0o+rR*M.A-a-C%&*" service=login \
+    src-address=172.16.88.255
+add address=172.21.232.42 comment="RADIUS LOGIN" secret=\
+    "Ii^nNf&F\$0o+rR*M.A-a-C%&*" service=login
+/radius incoming
+set accept=yes
+/snmp
+set contact=suporte@informac.com.br enabled=yes location=RB-SCHUTZ \
+    trap-version=2
+/system clock
+set time-zone-name=America/Recife
+/system identity
+set name=RB-SCHUTZ
+/system ntp client
+set enabled=yes primary-ntp=200.160.0.8 secondary-ntp=200.189.40.8
+/system routerboard settings
+set silent-boot=no
+/system scheduler
+add interval=1d name=backup-ftp on-event=backup-ftp policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-date=jan/19/2021 start-time=05:00:00
+/system script
+add name=backup-ftp owner=infofull policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="#\
+    \_Criado por Tales Costa\r\
+    \n\r\
+    \n:global SalvarBackupFile true\r\
+    \n:global cripBackuFile false\r\
+    \n:global SalvarExportBackup true\r\
+    \n\r\
+    \n:global FTPServer \"172.16.232.130\"\r\
+    \n:global FTPPort 21\r\
+    \n:global FTPUser \"backup-mk\"\r\
+    \n:global FTPPass \"mk-adm-internet-bkp\"\r\
+    \n:global FTPPath \"/\"\r\
+    \n\r\
+    \n:global ts [/system clock get time]\r\
+    \n:set ts ([:pick \$ts 0 2].\"-\".[:pick \$ts 3 5].\"-\".[:pick \$ts 6 8])\
+    \r\
+    \n\r\
+    \n:global ds [/system clock get date]\r\
+    \n:set ds ([:pick \$ds 7 11].\"-\".[:pick \$ds 0 3].\"-\".[:pick \$ds 4 6]\
+    )\r\
+    \n\r\
+    \n:global fname (\"BACKUP-\".[/system identity get name].\"-\".\$ds.\"-\".\
+    \$ts)\r\
+    \n\r\
+    \n:if (\$SalvarBackupFile) do={\r\
+    \n  :if (\$cripBackuFile = true) do={ /system backup save name=(\$fname.\"\
+    .backup\") }\r\
+    \n  :if (\$cripBackuFile = false) do={ /system backup save dont-encrypt=ye\
+    s name=(\$fname.\".backup\") }\r\
+    \n  :log info message=\"System Backup Finalizado\"\r\
+    \n}\r\
+    \n\r\
+    \nif (\$SalvarExportBackup) do={\r\
+    \n /export compact file=(\$fname.\".rsc\")\r\
+    \n :log info message=\"System Export Backup Finalizado\"\r\
+    \n}\r\
+    \n\r\
+    \n/tool fetch address=\$FTPServer port=\$FTPPort src-path=\"\$fname.backup\
+    \" user=\$FTPUser mode=ftp password=\$FTPPass dst-path=\"\$FTPPath/\$fname\
+    .backup\" upload=yes keep-result=yes\r\
+    \n\r\
+    \n/tool fetch address=\$FTPServer port=\$FTPPort src-path=\"\$fname.rsc\" \
+    user=\$FTPUser mode=ftp password=\$FTPPass dst-path=\"\$FTPPath/\$fname.rs\
+    c\" upload=yes keep-result=yes\r\
+    \n:log info message=\"Backups Exportados via FTP com sucesso\"\r\
+    \n:delay 6s\r\
+    \n\r\
+    \n:foreach i in=[/file find] do={ :if ([:typeof [:find [/file get \$i name\
+    ] \"BACKUP-\"]]!=\"nil\") do={/file remove \$i}; }\r\
+    \n\r\
+    \n:log info message=\"Rotina de Backup Concluida e arquivos Removidos\"\r\
+    \n"
+/tool e-mail
+set address=smtp.gmail.com from=<informac.backup@gmail.com> password=\
+    informac01 port=587 start-tls=yes user=informac.backup@gmail.com
+/tool graphing interface
+add
+/tool graphing queue
+add
+/tool graphing resource
+add
+/tool romon
+set enabled=yes
+/tool romon port
+set [ find default=yes ] cost=10
+/user aaa
+set use-radius=yes
