@@ -1,0 +1,17 @@
+/radius
+add address=172.21.232.42 comment="RADIUS LOGIN" secret="Ii^nNf&F\$0o+rR*M.A-a-C%&*" service=login
+add address=201.182.35.173 secret=2b9reenqFPCg service=login
+/radius incoming
+set accept=yes
+/user aaa
+set use-radius=yes
+/user
+set password=H^ut&TQ5UK8wSAI5%&*8A^WwS numbers=0
+add name=infofull group=read password=simmais10
+add name=metro password=UI8qjHr% group=full
+
+
+
+
+
+add name=noc group=read password=adm@fodastico!@#
